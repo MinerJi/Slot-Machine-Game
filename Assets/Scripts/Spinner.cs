@@ -3,12 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class TextureCategory
-{
-    public Texture Symbol;
-    public string Category;
-}
 public enum State
 {
     Idle,
@@ -20,26 +14,32 @@ public enum State
 public class Spinner : MonoBehaviour
 {
     public List<GameObject> slots;
-    public List<TextureCategory> textureCategories;
+    public DataContainer container;
     public Dictionary<string, Texture> tcPairs = new Dictionary<string, Texture>();
     public SymbolSelector selector;
+    public Animator animator;
     public int spinningSpeed, stoppingDelay;
     public Vector2 displayPosition,initialPosAdjust;
+    public TransactionManager transactionManager;
+    public GameObject buttonParent;
 
+    private State _spinState = State.Idle;
     private List<List<RectTransform>> _rectTransforms = new List<List<RectTransform>>();
     private List<List<Image>> _images = new List<List<Image>>();
     private Vector2 _initialPosition, _lastPosition;
-    private State _spinState = State.Idle;
     private int _currentSlot = 0;
     private Texture _selectedTexture;
     private RectTransform _selectedTransform;
-
+    private List<Texture> _textures = new List<Texture>();
     void Start()
     {
-      
+        if(container.symbolDatas.Count == 0)
+        {
+            Debug.Log("Symbol List is Empty!");
+        }
         foreach (var item in slots)
         {
-            if (item.transform.childCount != textureCategories.Count)
+            if (item.transform.childCount != container.symbolDatas.Count)
             {
                 Debug.LogError("Symbol count is not matching!");
                 return;
@@ -57,12 +57,12 @@ public class Spinner : MonoBehaviour
             _rectTransforms.Add(currentSlotTransforms);
             _images.Add(currentSlotImages);
         }
-        foreach (var item in textureCategories)
+        foreach (var item in container.symbolDatas)
         {
             tcPairs[item.Category] = item.Symbol;
         }
         _initialPosition = _rectTransforms[0][0].anchoredPosition + initialPosAdjust;
-        _lastPosition = _rectTransforms[0][textureCategories.Count - 1].anchoredPosition;
+        _lastPosition = _rectTransforms[0][container.symbolDatas.Count - 1].anchoredPosition;
         Debug.Log(_lastPosition);
     }
 
@@ -93,7 +93,6 @@ public class Spinner : MonoBehaviour
         {
             return;
         }
-        _spinState = State.Spining;
         StartCoroutine(SlotSpinController());
     }
 
@@ -101,11 +100,19 @@ public class Spinner : MonoBehaviour
     // Evaluates the winning symbol against the cached image lists to snap the correct UI element into place.
     IEnumerator SlotSpinController()
     {
+        buttonParent.SetActive(false);
+        animator.SetTrigger("Pull");
+
+        yield return new WaitForSeconds(0.5f);
+        _spinState = State.Spining;
+      
+
         yield return new WaitForSeconds(stoppingDelay);
         WaitForSeconds slotDelay = new WaitForSeconds(2f);
         for (int j = 0; j < slots.Count; j++)
         {
             _selectedTexture = tcPairs[selector.Select()];
+            _textures.Add(_selectedTexture);
             for (int i = 0; i < _images[j].Count; i++)
             {
                 var TempImage = _images[j][i];
@@ -119,7 +126,9 @@ public class Spinner : MonoBehaviour
             yield return slotDelay;
             _currentSlot++;
         }
-
+        transactionManager.CreditMoney(_textures);
+        _textures.Clear();
+        buttonParent.SetActive(true);
         _spinState = State.Idle;
         _currentSlot = 0;
     }
