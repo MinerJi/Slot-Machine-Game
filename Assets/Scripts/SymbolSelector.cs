@@ -8,25 +8,29 @@ public class CategoryWeight
     public int Weight;
 }
 
+//Summary
+//Selects a random symbol category based on predefined probability weights.
+//Acts as a weighted lottery, where categories with higher weights have a 
+//proportionally higher chance of being chosen.
+//he string name of the selected category, or "NoCategory" if the list is empty.
 public class SymbolSelector : MonoBehaviour
 {
-    public List<CategoryWeight> SymbolCategories;
+    public List<CategoryWeight> categoryWeights;
    
     public string Select()
     {
-        int NetWeight=0, CurrentWeight=0, RandomSelect=0;
+        int netWeight=0, currentWeight=0, randomSelect=0;
 
-        foreach (var symbol in SymbolCategories)
+        foreach (var symbol in categoryWeights)
         {
-            NetWeight += symbol.Weight;
+            netWeight += symbol.Weight;
         }
-        RandomSelect = Random.Range(0, NetWeight);
-        foreach (var symbol in SymbolCategories)
+        randomSelect = Random.Range(0, netWeight);
+        foreach (var symbol in categoryWeights)
         {
-            CurrentWeight += symbol.Weight;
-            if(CurrentWeight > RandomSelect)
+            currentWeight += symbol.Weight;
+            if(currentWeight > randomSelect)
             {
-                Debug.Log(symbol.Category);
                 return symbol.Category;
             }
         }
