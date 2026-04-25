@@ -19,7 +19,7 @@ public class Spinner : MonoBehaviour
     public SymbolSelector selector;
     public Animator animator;
     public int spinningSpeed, stoppingDelay;
-    public Vector2 displayPosition,initialPosAdjust;
+    public Vector2 displayPosition, initialPosAdjust;
     public TransactionManager transactionManager;
     public GameObject buttonParent;
 
@@ -31,9 +31,11 @@ public class Spinner : MonoBehaviour
     private Texture _selectedTexture;
     private RectTransform _selectedTransform;
     private List<Texture> _textures = new List<Texture>();
+
+    //Initializes required lists and dictonaries
     void Start()
     {
-        if(container.symbolDatas.Count == 0)
+        if (container.symbolDatas.Count == 0)
         {
             Debug.Log("Symbol List is Empty!");
         }
@@ -65,7 +67,7 @@ public class Spinner : MonoBehaviour
         _lastPosition = _rectTransforms[0][container.symbolDatas.Count - 1].anchoredPosition;
         Debug.Log(_lastPosition);
     }
-
+    //Handles the spinning
     void Update()
     {
         if (_spinState == State.Spining)
@@ -76,7 +78,7 @@ public class Spinner : MonoBehaviour
                 {
                     RectTransform TempTransform = _rectTransforms[j][i];
                     TempTransform.anchoredPosition = Vector2.MoveTowards(TempTransform.anchoredPosition, _lastPosition, spinningSpeed * Time.deltaTime);
-                    // Comparing Y-axis float values directly instead of using Vector2.Distance to save CPU cycles
+                   
                     if (TempTransform.anchoredPosition.y <= _lastPosition.y)
                     {
                         TempTransform.anchoredPosition = _initialPosition;
@@ -89,7 +91,7 @@ public class Spinner : MonoBehaviour
     //Ignores the call if the reels are already in motion.
     public void StartSpin()
     {
-        if (_spinState == State.Spining)
+        if (_spinState == State.Spining || container.remainingAmount < container.betAmount)
         {
             return;
         }
@@ -105,7 +107,7 @@ public class Spinner : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         _spinState = State.Spining;
-      
+
 
         yield return new WaitForSeconds(stoppingDelay);
         WaitForSeconds slotDelay = new WaitForSeconds(2f);
@@ -122,7 +124,9 @@ public class Spinner : MonoBehaviour
                     break;
                 }
             }
+
             yield return new WaitUntil(() => Vector2.Distance(_selectedTransform.anchoredPosition, displayPosition) < 1f && _selectedTransform.anchoredPosition.y >= displayPosition.y);
+
             yield return slotDelay;
             _currentSlot++;
         }
