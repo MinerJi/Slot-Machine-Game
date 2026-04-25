@@ -15,5 +15,5 @@ public class DataContainer : MonoBehaviour
 {
     public List<SymbbolData> symbolDatas;
     [HideInInspector]
-    public int remainingAmount,betAmount;
+    public int remainingAmount;
 }

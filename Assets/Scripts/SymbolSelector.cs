@@ -10,25 +10,33 @@ using UnityEngine;
 public class SymbolSelector : MonoBehaviour
 {
     public DataContainer container;
-   
+
     public string Select()
     {
-        int netWeight=0, currentWeight=0, randomSelect=0;
+        int netWeight = 0, currentWeight = 0, randomSelect = 0;
 
+        // Calculate total weight of all symbols
         foreach (var symbol in container.symbolDatas)
         {
             netWeight += symbol.Weight;
         }
+
+        // Pick a random number from 0 to total weight (exclusive)
+        // This decides which symbol will be selected
         randomSelect = Random.Range(0, netWeight);
+
+        // Traverse again and keep adding weights cumulatively
         foreach (var symbol in container.symbolDatas)
         {
             currentWeight += symbol.Weight;
-            if(currentWeight > randomSelect)
+            // When cumulative weight crosses random number,
+            // that symbol is the selected one
+            if (currentWeight > randomSelect)
             {
                 return symbol.Category;
             }
         }
-
+        // Fallback case, only if something unexpected happens
         return "NoCategory";
     }
 

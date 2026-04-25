@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4471206100480056030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7963643592594349832}
+  - component: {fileID: 2873706115541086452}
+  m_Layer: 0
+  m_Name: DataContainer Object
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7963643592594349832
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471206100480056030}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.96074, y: 0.31923, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2873706115541086452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4471206100480056030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 563c089e72d944641a81972ff85d4496, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DataContainer
+  symbolDatas:
+  - Symbol: {fileID: 2800000, guid: 30421618d1e2bb8478a8325e45d19cb6, type: 3}
+    Category: A
+    Weight: 10
+    Reward: 5
+  - Symbol: {fileID: 2800000, guid: 5575d49c4891ca34e9f1dd6fd6062f77, type: 3}
+    Category: B
+    Weight: 20
+    Reward: 4
+  - Symbol: {fileID: 2800000, guid: 53fe47012fc70e746b4ea40d198faa02, type: 3}
+    Category: C
+    Weight: 30
+    Reward: 3
+  - Symbol: {fileID: 2800000, guid: f31490df6aee7054e8a476f9cbecf759, type: 3}
+    Category: D
+    Weight: 40
+    Reward: 2
+  - Symbol: {fileID: 2800000, guid: 4f3ec6f272d3d8842954b8f13150f377, type: 3}
+    Category: E
+    Weight: 5
+    Reward: 1
+  remainingAmount: 0
+  betAmount: 0

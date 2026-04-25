@@ -89,10 +89,13 @@ public class Spinner : MonoBehaviour
     }
     // Initiates the slot machine spin sequence. 
     //Ignores the call if the reels are already in motion.
-    public void StartSpin()
+    public void StartSpin(int betAmount)
     {
-        if (_spinState == State.Spining || container.remainingAmount < container.betAmount)
+        Debug.Log(container.remainingAmount);
+        Debug.Log(betAmount);
+        if (_spinState == State.Spining || container.remainingAmount < betAmount)
         {
+         
             return;
         }
         StartCoroutine(SlotSpinController());

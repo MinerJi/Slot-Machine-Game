@@ -14,7 +14,7 @@ public class TransactionManager : MonoBehaviour
 
     // Maps each standard symbol texture to its corresponding payout multiplier
     private Dictionary<Texture, float> _rewardValue = new Dictionary<Texture, float>();
-
+    private int _betAmount;
     // Initializes the player's starting balance and populates the reward dictionary
     void Start()
     {
@@ -34,7 +34,7 @@ public class TransactionManager : MonoBehaviour
         {
             container.remainingAmount -= amount;
             money.text = container.remainingAmount.ToString();
-            container.betAmount = amount;
+            _betAmount = amount;
             message.text = "Spinning";
         }
     }
@@ -59,9 +59,8 @@ public class TransactionManager : MonoBehaviour
      
         if (specialSymbolCount > -1)
         {
-            winningAmount = container.betAmount * (minReward + specialSymbolCount);
+            winningAmount = _betAmount * (minReward + specialSymbolCount);
             container.remainingAmount += winningAmount;
-            
         }
         else
         {
@@ -69,16 +68,18 @@ public class TransactionManager : MonoBehaviour
             {
                 if (selectedTextures[i] != selectedTextures[i + 1])
                 {
+                
                     message.text = "Try Again :(";
                     return;
                 }
             }
 
-            winningAmount = (int)(container.betAmount * _rewardValue[selectedTextures[0]]);
+            winningAmount = (int)(_betAmount * _rewardValue[selectedTextures[0]]);
             container.remainingAmount += winningAmount ;
-          
+            
         }
         message.text = "+" + winningAmount;
         money.text = container.remainingAmount.ToString();
+       
     }   
 }
