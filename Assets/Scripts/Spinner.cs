@@ -8,6 +8,7 @@ public enum State
     Idle,
     Spining,
 }
+
 //Summary
 //Controls the visual spinning logic and symbol selection for a slot machine reel system.
 //Requires pre-configured UI GameObjects for the slots and a SymbolSelector for determining outcomes.
@@ -67,26 +68,30 @@ public class Spinner : MonoBehaviour
         _lastPosition = _rectTransforms[0][container.symbolDatas.Count - 1].anchoredPosition;
         Debug.Log(_lastPosition);
     }
+
     //Handles the spinning
     void Update()
     {
         if (_spinState == State.Spining)
         {
+            float moveStep = spinningSpeed * Time.deltaTime;
+
             for (int j = _currentSlot; j < slots.Count; j++)
             {
                 for (int i = 0; i < _rectTransforms[j].Count; i++)
                 {
                     RectTransform TempTransform = _rectTransforms[j][i];
-                    TempTransform.anchoredPosition = Vector2.MoveTowards(TempTransform.anchoredPosition, _lastPosition, spinningSpeed * Time.deltaTime);
-
+                    TempTransform.anchoredPosition = new Vector2(TempTransform.anchoredPosition.x, TempTransform.anchoredPosition.y - moveStep);
                     if (TempTransform.anchoredPosition.y <= _lastPosition.y)
                     {
-                        TempTransform.anchoredPosition = _initialPosition;
+                        float overshoot = TempTransform.anchoredPosition.y - _lastPosition.y;
+                        TempTransform.anchoredPosition = new Vector2(_initialPosition.x, _initialPosition.y + overshoot);
                     }
                 }
             }
         }
     }
+
     // Initiates the slot machine spin sequence. 
     //Ignores the call if the reels are already in motion.
     public void StartSpin(int betAmount)
