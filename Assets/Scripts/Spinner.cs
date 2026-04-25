@@ -78,7 +78,7 @@ public class Spinner : MonoBehaviour
                 {
                     RectTransform TempTransform = _rectTransforms[j][i];
                     TempTransform.anchoredPosition = Vector2.MoveTowards(TempTransform.anchoredPosition, _lastPosition, spinningSpeed * Time.deltaTime);
-                   
+
                     if (TempTransform.anchoredPosition.y <= _lastPosition.y)
                     {
                         TempTransform.anchoredPosition = _initialPosition;
@@ -95,7 +95,7 @@ public class Spinner : MonoBehaviour
         Debug.Log(betAmount);
         if (_spinState == State.Spining || container.remainingAmount < betAmount)
         {
-         
+
             return;
         }
         StartCoroutine(SlotSpinController());
@@ -111,13 +111,13 @@ public class Spinner : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         _spinState = State.Spining;
 
-
         yield return new WaitForSeconds(stoppingDelay);
         WaitForSeconds slotDelay = new WaitForSeconds(2f);
         for (int j = 0; j < slots.Count; j++)
         {
             _selectedTexture = tcPairs[selector.Select()];
             _textures.Add(_selectedTexture);
+            Debug.Log(_selectedTexture);
             for (int i = 0; i < _images[j].Count; i++)
             {
                 var TempImage = _images[j][i];
@@ -127,11 +127,17 @@ public class Spinner : MonoBehaviour
                     break;
                 }
             }
+            yield return new WaitUntil(() => Vector2.Distance(_selectedTransform.anchoredPosition, displayPosition) <= (spinningSpeed * Time.deltaTime * 1.5f));
 
-            yield return new WaitUntil(() => Vector2.Distance(_selectedTransform.anchoredPosition, displayPosition) < 1f && _selectedTransform.anchoredPosition.y >= displayPosition.y);
+            _currentSlot++;
+
+            Vector2 offset = displayPosition - _selectedTransform.anchoredPosition;
+            for (int i = 0; i < _rectTransforms[j].Count; i++)
+            {
+                _rectTransforms[j][i].anchoredPosition += offset;
+            }
 
             yield return slotDelay;
-            _currentSlot++;
         }
         transactionManager.CreditMoney(_textures);
         _textures.Clear();

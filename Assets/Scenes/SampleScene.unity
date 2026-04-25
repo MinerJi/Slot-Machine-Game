@@ -561,6 +561,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1643178286}
     - target: {fileID: 647069286337838985, guid: 3f4305bc6871ab9489cd9f659fe8e891, type: 3}
+      propertyPath: displayPosition.y
+      value: -110
+      objectReference: {fileID: 0}
+    - target: {fileID: 647069286337838985, guid: 3f4305bc6871ab9489cd9f659fe8e891, type: 3}
       propertyPath: transactionManager
       value: 
       objectReference: {fileID: 1662621028}
@@ -816,6 +820,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2873706115541086452, guid: b40abc8075b6b2044914662f6d8fbafb, type: 3}
+      propertyPath: symbolDatas.Array.data[0].Weight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2873706115541086452, guid: b40abc8075b6b2044914662f6d8fbafb, type: 3}
+      propertyPath: symbolDatas.Array.data[4].Reward
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4471206100480056030, guid: b40abc8075b6b2044914662f6d8fbafb, type: 3}
       propertyPath: m_Name
       value: DataContainer Object

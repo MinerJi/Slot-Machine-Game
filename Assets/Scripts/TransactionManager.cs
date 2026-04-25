@@ -18,6 +18,7 @@ public class TransactionManager : MonoBehaviour
     // Initializes the player's starting balance and populates the reward dictionary
     void Start()
     {
+        Application.targetFrameRate = 60;
        container.remainingAmount = initialAmount;
         money.text = container.remainingAmount.ToString();
 
