@@ -561,6 +561,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1643178286}
     - target: {fileID: 647069286337838985, guid: 3f4305bc6871ab9489cd9f659fe8e891, type: 3}
+      propertyPath: stoppingDelay
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 647069286337838985, guid: 3f4305bc6871ab9489cd9f659fe8e891, type: 3}
       propertyPath: displayPosition.y
       value: -110
       objectReference: {fileID: 0}

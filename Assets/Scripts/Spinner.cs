@@ -112,7 +112,7 @@ public class Spinner : MonoBehaviour
         _spinState = State.Spining;
 
         yield return new WaitForSeconds(stoppingDelay);
-        WaitForSeconds slotDelay = new WaitForSeconds(2f);
+        WaitForSeconds slotDelay = new WaitForSeconds(1.4f);
         for (int j = 0; j < slots.Count; j++)
         {
             _selectedTexture = tcPairs[selector.Select()];
